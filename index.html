@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Principle of Moments Simulator | Syllabus 6091</title>
+    <!-- Google Fonts for premium tech/edu aesthetic -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="glow-bg"></div>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="badge">PHYSICS SYLLABUS 6091</div>
+            <h1>Principle of Moments</h1>
+            <p class="subtitle">1 Pivot One Side &bull; 2 Forces &bull; Level Up Your Physics</p>
+        </header>
+
+        <!-- Main Workspace Grid -->
+        <main class="workspace">
+            <!-- Left Side: Controls & Sliders -->
+            <section class="control-panel glass">
+                <div class="panel-header">
+                    <h2>Configuration</h2>
+                    <span id="equilibrium-badge" class="status-badge balanced">BALANCED</span>
+                </div>
+
+                <!-- Sliders Group -->
+                <div class="sliders-container">
+                    <!-- Force 1 Slider -->
+                    <div class="slider-card" id="card-F1">
+                        <div class="slider-header">
+                            <span class="label f1-color">Force 1 (F<sub>1</sub>)</span>
+                            <span class="value-display" id="val-F1">10 N</span>
+                        </div>
+                        <input type="range" id="slider-F1" min="1" max="20" step="1" value="10">
+                        <div class="quiz-input-wrapper hidden" id="quiz-F1-wrapper">
+                            <input type="number" id="quiz-F1" placeholder="Enter F1...">
+                            <span class="unit">N</span>
+                        </div>
+                    </div>
+
+                    <!-- Distance 1 Slider -->
+                    <div class="slider-card" id="card-d1">
+                        <div class="slider-header">
+                            <span class="label d1-color">Distance 1 (d<sub>1</sub>)</span>
+                            <span class="value-display" id="val-d1">0.5 m</span>
+                        </div>
+                        <input type="range" id="slider-d1" min="0.1" max="1.0" step="0.1" value="0.5">
+                        <div class="quiz-input-wrapper hidden" id="quiz-d1-wrapper">
+                            <input type="number" id="quiz-d1" placeholder="Enter d1..." step="0.1">
+                            <span class="unit">m</span>
+                        </div>
+                    </div>
+
+                    <!-- Force 2 Slider -->
+                    <div class="slider-card" id="card-F2">
+                        <div class="slider-header">
+                            <span class="label f2-color">Force 2 (F<sub>2</sub>)</span>
+                            <span class="value-display" id="val-F2">10 N</span>
+                        </div>
+                        <input type="range" id="slider-F2" min="1" max="20" step="1" value="10">
+                        <div class="quiz-input-wrapper hidden" id="quiz-F2-wrapper">
+                            <input type="number" id="quiz-F2" placeholder="Enter F2...">
+                            <span class="unit">N</span>
+                        </div>
+                    </div>
+
+                    <!-- Distance 2 Slider -->
+                    <div class="slider-card" id="card-d2">
+                        <div class="slider-header">
+                            <span class="label d2-color">Distance 2 (d<sub>2</sub>)</span>
+                            <span class="value-display" id="val-d2">0.5 m</span>
+                        </div>
+                        <input type="range" id="slider-d2" min="0.1" max="1.0" step="0.1" value="0.5">
+                        <div class="quiz-input-wrapper hidden" id="quiz-d2-wrapper">
+                            <input type="number" id="quiz-d2" placeholder="Enter d2..." step="0.1">
+                            <span class="unit">m</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Buttons -->
+                <div class="actions">
+                    <button id="btn-randomise" class="btn primary">
+                        <svg viewBox="0 0 24 24" class="icon"><path d="M10.59 9.17L5.41 4 4 5.41l5.17 5.17 1.42-1.41zM14.5 4l2.04 2.04L4 18.59 5.41 20 17.96 7.46 20 9.5V4h-5.5zm.33 9.41l-1.41 1.41 3.13 3.13L14.5 20H20v-5.5l-2.04 2.04-3.13-3.13z"/></svg>
+                        Randomise
+                    </button>
+                    <button id="btn-test-mode" class="btn secondary">
+                        <svg viewBox="0 0 24 24" class="icon"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg>
+                        Test Mode
+                    </button>
+                </div>
+            </section>
+
+            <!-- Right Side: Live Animation Canvas -->
+            <section class="simulation-panel glass">
+                <div class="panel-header">
+                    <h2>Live Simulation</h2>
+                    <div id="pivot-indicator" class="pivot-badge">Pivot: Left</div>
+                </div>
+
+                <div class="canvas-container">
+                    <canvas id="physics-canvas"></canvas>
+                </div>
+
+                <!-- Live Diagnostics Grid -->
+                <div class="diagnostics-grid">
+                    <div class="diag-card acw-card">
+                        <div class="diag-title">Anti-Clockwise Moment</div>
+                        <div class="diag-value" id="moment-acw">0.0 N·m</div>
+                        <div class="diag-detail" id="moment-acw-detail">F₁ × d₁</div>
+                    </div>
+                    <div class="diag-card cw-card">
+                        <div class="diag-title">Clockwise Moment</div>
+                        <div class="diag-value" id="moment-cw">0.0 N·m</div>
+                        <div class="diag-detail" id="moment-cw-detail">F₂ × d₂</div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Test Mode HUD & Solver UI -->
+        <section class="test-hud-panel glass hidden" id="test-hud">
+            <div class="test-header">
+                <h3><span class="live-pulse"></span> Challenge Active</h3>
+                <div class="test-actions">
+                    <button id="btn-reveal" class="btn text-btn">
+                        <svg viewBox="0 0 24 24" class="icon" id="eye-icon-show"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                        <svg viewBox="0 0 24 24" class="icon hidden" id="eye-icon-hide"><path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.82l2.92 2.92c1.51-1.26 2.7-2.89 3.44-4.74-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/></svg>
+                        <span id="reveal-text">Reveal Answer</span>
+                    </button>
+                    <button id="btn-show-working" class="btn text-btn">
+                        <svg viewBox="0 0 24 24" class="icon"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-4 6h-4v2h4v2h-4v2h4v2H9V7h6v2z"/></svg>
+                        Show Working
+                    </button>
+                </div>
+            </div>
+            <div id="solution-working" class="solution-details hidden">
+                <!-- Calculated working steps will be inserted here dynamically -->
+            </div>
+        </section>
+    </div>
+    
+    <script src="app.js"></script>
+</body>
+</html>
